@@ -1,0 +1,63 @@
+---
+whiskers:
+  version: "^2.8.0"
+  filename: "theme.lua"
+  hex_format: "#{{R}}{{G}}{{B}}{{Z}}"
+---
+-- Catppuccin tym theme
+
+-- Change the following flavour variable to the color scheme of your choice
+-- Available options{%- for id, flavor in flavors %} "{{ id }}"{% if not loop.last %},{% endif %}{%- endfor %}.
+local flavour = "mocha"
+
+local catppuccin = {
+  {%- for id, flavor in flavors %}
+  {{ id }} = {
+    rosewater = '{{ flavor.colors.rosewater.hex }}',
+    red = '{{ flavor.colors.red.hex }}',
+    green = '{{ flavor.colors.green.hex }}',
+    yellow = '{{ flavor.colors.yellow.hex }}',
+    blue = '{{ flavor.colors.blue.hex }}',
+    pink = '{{ flavor.colors.pink.hex }}',
+    teal = '{{ flavor.colors.teal.hex }}',
+    text = '{{ flavor.colors.text.hex }}',
+    subtext1 = '{{ flavor.colors.subtext1.hex }}',
+    subtext0 = '{{ flavor.colors.subtext0.hex }}',
+    surface2 = '{{ flavor.colors.surface2.hex }}',
+    surface1 = '{{ flavor.colors.surface1.hex }}',
+    base = '{{ flavor.colors.base.hex }}',
+  },
+  {%- endfor %}
+}
+
+function catppuccin.select(palette)
+  local isLatte = palette == "latte"
+  return {
+    color_background           = catppuccin[palette].base,
+    color_foreground           = catppuccin[palette].text,
+    color_window_background    = catppuccin[palette].base,
+    color_bold                 = catppuccin[palette].text,
+    color_cursor               = catppuccin[palette].rosewater,
+    color_cursor_foreground    = catppuccin[palette].base,
+    color_highlight            = catppuccin[palette].rosewater,
+    color_highlight_foreground = catppuccin[palette].base,
+    color_0                    = isLatte and catppuccin[palette].subtext1 or catppuccin[palette].surface1, -- black (background)
+    color_1                    = catppuccin[palette].red, -- red
+    color_2                    = catppuccin[palette].green, -- green
+    color_3                    = catppuccin[palette].yellow, -- brown
+    color_4                    = catppuccin[palette].blue, -- blue
+    color_5                    = catppuccin[palette].pink, -- purple
+    color_6                    = catppuccin[palette].teal, -- cyan
+    color_7                    = isLatte and catppuccin[palette].surface2 or catppuccin[palette].subtext1, -- light gray (foreground)
+    color_8                    = isLatte and catppuccin[palette].subtext0 or catppuccin[palette].surface2, -- gray
+    color_9                    = catppuccin[palette].red, -- light red
+    color_10                   = catppuccin[palette].green, -- light green
+    color_11                   = catppuccin[palette].yellow, -- yellow
+    color_12                   = catppuccin[palette].blue, -- light blue
+    color_13                   = catppuccin[palette].pink, -- pink
+    color_14                   = catppuccin[palette].teal, -- light cyan
+    color_15                   = isLatte and catppuccin[palette].surface1 or catppuccin[palette].subtext0, -- white
+  }
+end
+
+return catppuccin.select(flavour)
